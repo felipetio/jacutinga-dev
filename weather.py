@@ -1,5 +1,8 @@
 import requests
 
+from datetime import datetime
+
+
 
 
 
@@ -12,16 +15,18 @@ endpoint = "https://api.openweathermap.org/data/3.0/onecall/timemachine"
 
 latitude = -22.9108074
 
-logitude = -45.9573599
+longitude = -45.9573599
 
-data = "2024-10-01"
+data_str = "2024/10/01"
+ #https://openweathermap.org/api/one-call-3
 
-
+data = datetime.strptime(data_str, '%Y/%m/%d')
 
 TOKEN = "5e164d17260da778da3bcb39b35aea95"
+# lat=-22.9108074&lon=-45.9573599&dt=2024-10-01&appid=5e164d17260da778da3bcb39b35aea95 
+latitude = -22.9108074
+url = f"{endpoint}?lat={latitude}&lon={longitude}&dt={int(data.timestamp())}&appid={TOKEN}"
 
-url = f"{endpoint}?appid={TOKEN}"
-
-
+print(url)
 response = requests.get(url)
 print(response.text)
