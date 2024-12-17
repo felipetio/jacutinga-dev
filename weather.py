@@ -1,6 +1,7 @@
 import requests
 from datetime import datetime
 from typing import Dict, Any, List
+from conversor import kelvin_para_celsius
 
 # URL base da API
 OPENWEATERMAP_URL = "https://api.openweathermap.org"
@@ -43,18 +44,19 @@ def buscar_clima(latitude: float, longitude: float, data: datetime, api_key: str
             "data": datetime.fromtimestamp(clima["dt"]),
             "latitude": dados["lat"],
             "longitude": dados["lon"],
-            "temperatura": clima["temp"],
-            "sensacao_termica": clima["feels_like"],
+            "temperatura": kelvin_para_celsius(clima["temp"]),
+            "sensacao_termica": kelvin_para_celsius(clima["feels_like"]),
             "pressao": clima["pressure"],
             "umidade": clima["humidity"],
             "nuvens": clima["clouds"],
             "vento_velocidade": clima["wind_speed"],
             "vento_direcao": clima["wind_deg"],
             "nascer_sol": datetime.fromtimestamp(clima["sunrise"]),
-            "por_sol": datetime.fromtimestamp(clima["sunset"]),
             "condicao_clima": tempo["main"],
-            "descricao_clima": tempo["description"]
+            "descricao_clima": tempo["description"],
+            "por_sol": datetime.fromtimestamp(clima["sunset"]),
         }
+    
     except requests.exceptions.HTTPError as e:
         raise Exception(f"Erro na requisição: {str(e)}")
     except (KeyError, ValueError) as e:
@@ -69,7 +71,7 @@ if __name__ == "__main__":
     LONGITUDE = -45.9573599
     
     # Exemplo com uma única data
-    data_str = "2025-10-01"
+    data_str = "2024-10-01"
     data= datetime.strptime(data_str, "%Y-%m-%d")
     
     # Buscando dados para uma data
