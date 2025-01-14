@@ -1,5 +1,5 @@
 
-def fahrenheit_para_celsius(fahrenheit):
+def fahrenheit_para_celsius(fahrenheit: float) -> float:
     """"
     Transforma uma tempetatura de Fahrenheit para celsius
     """
@@ -8,7 +8,7 @@ def fahrenheit_para_celsius(fahrenheit):
 
 
 
-def kelvin_para_celsius(kelvin):
+def kelvin_para_celsius(kelvin: float) -> float:
     """
     Transforma uma temperatura de Kelvin para Celsius
     """
