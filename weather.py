@@ -88,8 +88,23 @@ if __name__ == "__main__":
     
         # Buscar os dados climáticos
        
-        dados.append(buscar_clima(latitude, longitude, data_hora, API_KEY))
-      
+        avistamento_clima = buscar_clima(latitude, longitude, data_hora, API_KEY) 
+        #juntar avistamento com busca clima
+        registro_completo = {**avistamento, **avistamento_clima}
+        
+        #juntar avistamento com avistamento_clima antes de fazer o append
+        #abrir um pull request e marcar felipe como revisor
+        #dados.append(x)
+        dados.append(registro_completo)
     df = pd.DataFrame(dados)  
 
-    print(df)      
+    print(df.groupby("nome_ave").agg({"temperatura": ["mean", "min", "max"]}))     
+
+ 
+
+
+
+
+
+
+
