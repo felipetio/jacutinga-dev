@@ -1,3 +1,5 @@
+import pandas as pd
+import utils
 import requests
 from datetime import datetime
 from typing import Dict, Any, List
@@ -65,15 +67,44 @@ def buscar_clima(latitude: float, longitude: float, data: datetime, api_key: str
 
 # Exemplo de uso
 if __name__ == "__main__":
+    avistamentos_jacutinga = utils.read_csv("data/exemplo.csv")
+  
+
     # Configurações
     API_KEY = "5e164d17260da778da3bcb39b35aea95"
-    LATITUDE = -22.9108074
-    LONGITUDE = -45.9573599
     
-    # Exemplo com uma única data
-    data_str = "2024-10-01"
-    data= datetime.strptime(data_str, "%Y-%m-%d")
-    
+    #Lista vazia para armazenar os dados
+    dados = []
+   
     # Buscando dados para uma data
-    dados = buscar_clima(LATITUDE, LONGITUDE, data, API_KEY)
-    print(dados) 
+    
+    for avistamento in avistamentos_jacutinga:
+        latitude = avistamento["latitude"]
+        longitude = avistamento["longitude"]
+        data_str = avistamento["data_hora"]
+    
+       # Converter a string de data para um objeto datetime
+        data_hora = datetime.strptime(data_str, "%Y-%m-%d %H:%M:%S")
+    
+        # Buscar os dados climáticos
+       
+        avistamento_clima = buscar_clima(latitude, longitude, data_hora, API_KEY) 
+        #juntar avistamento com busca clima
+        registro_completo = {**avistamento, **avistamento_clima}
+        
+        #juntar avistamento com avistamento_clima antes de fazer o append
+        #abrir um pull request e marcar felipe como revisor
+        #dados.append(x)
+        dados.append(registro_completo)
+    df = pd.DataFrame(dados)  
+
+    print(df.groupby("nome_ave").agg({"temperatura": ["mean", "min", "max"]}))     
+
+ 
+
+
+
+
+
+
+
