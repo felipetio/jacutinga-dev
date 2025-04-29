@@ -42,7 +42,7 @@ def buscar_clima(latitude: float, longitude: float, data: datetime, api_key: str
         tempo = clima["weather"][0]
         
         # Formatando para pandas
-        return {
+        response = {
             "data": datetime.fromtimestamp(clima["dt"]),
             "latitude": dados["lat"],
             "longitude": dados["lon"],
@@ -58,19 +58,8 @@ def buscar_clima(latitude: float, longitude: float, data: datetime, api_key: str
             "descricao_clima": tempo["description"],
             "por_sol": datetime.fromtimestamp(clima["sunset"]),
         }
-    
+        return response
     except requests.exceptions.HTTPError as e:
         raise Exception(f"Erro na requisição: {str(e)}")
     except (KeyError, ValueError) as e:
         raise Exception(f"Erro ao processar dados: {str(e)}")
-
-
-
- 
-
-
-
-
-
-
-
