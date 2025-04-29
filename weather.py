@@ -58,7 +58,6 @@ def buscar_clima(latitude: float, longitude: float, data: datetime, api_key: str
             "descricao_clima": tempo["description"],
             "por_sol": datetime.fromtimestamp(clima["sunset"]),
         }
-        print(response)
         return response
     except requests.exceptions.HTTPError as e:
         raise Exception(f"Erro na requisição: {str(e)}")
