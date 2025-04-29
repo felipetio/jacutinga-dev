@@ -42,7 +42,7 @@ def buscar_clima(latitude: float, longitude: float, data: datetime, api_key: str
         tempo = clima["weather"][0]
         
         # Formatando para pandas
-        return {
+        response = {
             "data": datetime.fromtimestamp(clima["dt"]),
             "latitude": dados["lat"],
             "longitude": dados["lon"],
@@ -58,7 +58,8 @@ def buscar_clima(latitude: float, longitude: float, data: datetime, api_key: str
             "descricao_clima": tempo["description"],
             "por_sol": datetime.fromtimestamp(clima["sunset"]),
         }
-    
+        print(response)
+        return response
     except requests.exceptions.HTTPError as e:
         raise Exception(f"Erro na requisição: {str(e)}")
     except (KeyError, ValueError) as e:
@@ -66,8 +67,9 @@ def buscar_clima(latitude: float, longitude: float, data: datetime, api_key: str
 
 
 # Exemplo de uso
-if __name__ == "__main__":
-    avistamentos_jacutinga = utils.read_csv("data/exemplo.csv")
+def carregar_dados(file_name = "data/exemplo.csv"): 
+
+    avistamentos_jacutinga = utils.read_csv(file_name)
   
 
     # Configurações
@@ -98,13 +100,10 @@ if __name__ == "__main__":
         dados.append(registro_completo)
     df = pd.DataFrame(dados)  
 
-    print(df.groupby("nome_ave").agg({"temperatura": ["mean", "min", "max"]}))     
+    return df    
 
  
-
-
-
-
-
-
-
+if __name__ == "__main__":
+    # Exemplo de uso
+    df = carregar_dados()
+    print(df.head()) 
