@@ -127,8 +127,8 @@ def extract_points_from_kmz(kmz_file_path, output_csv_path):
 # Exemplo de uso
 if __name__ == "__main__":
     # Configurar caminhos dos arquivos
-    kmz_input = "fevereiro_2023.kmz"  # Substitua pelo caminho do seu arquivo KMZ
-    csv_output = "pontos_extraidos.csv"  # Nome do arquivo CSV de saída
+    kmz_input = "data/exemplo.kmz"  # Substitua pelo caminho do seu arquivo KMZ
+    csv_output = "data/pontos_extraidos.csv"  # Nome do arquivo CSV de saída
     
     # Verificar se o arquivo KMZ existe
     if os.path.exists(kmz_input):
